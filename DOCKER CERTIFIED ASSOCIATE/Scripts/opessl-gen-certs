@@ -1,0 +1,2 @@
+# generate CA certificatin 
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout /location/ -x509 -days 365 -out /location/of/certs.crt

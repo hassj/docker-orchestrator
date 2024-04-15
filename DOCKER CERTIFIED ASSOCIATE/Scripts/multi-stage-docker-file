@@ -1,0 +1,14 @@
+FROM ubuntu:bionic AS stage1
+ENV NGINX_VERSION 1.14.0-0ubuntu1.11
+RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y nginx=$NGINX_VERSION
+WORKDIR /var/www/html
+
+FROM alpine:3.9.3
+WORKDIR /root
+COPY --from=stage1 /var/www/html/index.html ./
+
+CMD ["nginx", "-g", "daemon off;"]
+
+STOPSIGNAL signal SIGTERM
+HEALTHCHECK CMD curl localhost:80

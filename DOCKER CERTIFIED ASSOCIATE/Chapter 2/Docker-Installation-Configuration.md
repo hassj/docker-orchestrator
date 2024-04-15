@@ -182,7 +182,7 @@ It provides many useful features, and can help facilitate orchestration, high av
 `docker info`
 `docker node ls`
 
-## Chapter 2.10: Configurin swarm node
+## Chapter 2.10: Configuring swarm node
 
 [add node to swarm](https://docs.docker.com/engine/swarm/swarm-tutorial/add-nodes/)
 
@@ -197,7 +197,7 @@ It provides many useful features, and can help facilitate orchestration, high av
 - checking with
 ` docker node ls`
 
-## Docker swarm backup and restore
+## Chapter 2.11 Docker swarm backup and restore
 
 [swarm backup and restore](https://docs.docker.com/engine/swarm/admin_guide/#back-up-the-swarm)
 
@@ -240,9 +240,6 @@ Some commonly namespace use for container
 
 Reading: 
 https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/b483895a-8317-45f0-8cb1-62ff4217484e/adb32178-fafe-4eb2-9d3c-24f156dc921c/watch
-
-
-
 
 
 
