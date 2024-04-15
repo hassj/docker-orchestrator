@@ -3,7 +3,7 @@
 [swarm manger locking](https://docs.docker.com/engine/swarm/swarm_manager_locking/)
 
 docker swarm encrypt sensitive data in the manager nodes with key is stored in uncrypted on managed disks.
-autolock is security feature help docker swarm protect the log, or tls communication inforamtion between nodes from the attacker by encrypted. by default it is turned off.
+``autolock`` is security feature help docker swarm protect the log, or tls communication inforamtion between nodes from the attacker by encrypted. by default it is turned off.
 
 
 - Turning autolock on existing swarm on with belows command:
@@ -35,7 +35,7 @@ note: you need to unlock autolock everytime you want to restart docker on manage
 1. Multiple manger nodes
 More manger nodes the more fault tolerance of high availability for swarm. but many manager nodes will affect to the performance of swarm cluster when maintain consistence state of swarm cluster.
 
-Docker use raft consensus algorithm to manage manger nodes.
+Docker use ``raft consensus algorithm`` to manage manger nodes.
 
 2. Quorum
 It is a feature of multiple manager nodes. more than one half of number manager nodes create an quorum. support for maintain tasks, nodes...
@@ -140,7 +140,7 @@ services:
   busybox:
     image: radial/busyboxplus:curl
     cmd: /bin/sh -c "while true; do echo $$MESSAGE; curl web:80; sleep 10; done"
-    environments:
+    environment:
       - MESSAGE=hello!
 ```
 
@@ -181,6 +181,7 @@ This will spread all tasks to all node having value for balancing load.
 
 
 # Reading: 
-https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/4849ea83-4ecb-459c-bdb0-72487b63082f/48d90ac1-a148-4e8e-af43-4ac3bb4ffad0/watch
+https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/4849ea83-4ecb-459c-bdb0-72487b63082f/023794fa-1f3a-42f6-be3d-550174b09c96/lab/fc2bac2f-e76c-4a58-8117-451019745114
+
 
 
