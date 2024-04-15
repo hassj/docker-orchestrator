@@ -84,7 +84,75 @@ Example:
 
 `docker service scale service_name=replicas_number` `docker service scale nginx=4`	// scale service is change the number of replicas
 
+## Chapter 2.4 Docker inspect
+
+[docker service create](https://docs.docker.com/reference/cli/docker/service/create/)
+[how service work](https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/)
+[deploy service to swarm](https://docs.docker.com/engine/swarm/services/)
+
+use either both ``docker inspect object_id`` or ``docker <type_of_service> inspect ID`` 
+
+> use ``--pretty`` for readable , it also support for some type of docker object such as: service.
+
+1. use format to inspect docker object
+
+``docker inspect --format='{{.ID_field}}' service_name``
+
+## Chapter 4.5 Docker compose
+
+[Migrate to compose v2](https://docs.docker.com/compose/migrate/)
+[Docker compose overview](https://docs.docker.com/compose/)
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+```
+`` docker-compose up -d``; ``docker-compose ps``; ``docker-compose down`` //remove container defined in docker-compose file without remove network and volumes
+
+## Chapter 4.6: Introduction to Docker Stack
+[docker stack](https://docs.docker.com/reference/cli/docker/stack/)
+[deploy a stack to swarm](https://docs.docker.com/engine/swarm/stack-deploy/)
+
+docker stack are similar to the multi-container apps created using docker-compose. however they can be scaled and executed across swarm just like normal swarm service.
+
+- Deploy stack to cluster using compose file
+`docker stack deploy -c compose_file stack_name`
+
+- List current Stack
+`docker stack ls`
+
+- list the tasks acssociated with a Stack
+`docker stack ps stack_name`
+
+- list the services associated with a Stack
+` docker stack services stack_name`
+
+- Scaled service in compose file
+```
+version: '3'
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 3 
+  busybox:
+    image: radial/busyboxplus:curl
+    cmd: /bin/sh -c "while true; do echo $$MESSAGE; curl web:80; sleep 10; done"
+    environments:
+      - MESSAGE=hello!
+```
+
+- docker service log
+`docker service logs service_name`
+
+- Remove stack and service underly the compose file (network)
+`docker stack rm stack_name`
+
+
 
 # Reading: 
-https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/4849ea83-4ecb-459c-bdb0-72487b63082f/ca4c399d-1c92-448a-8251-90c0f5f45aee/watch
+https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/4849ea83-4ecb-459c-bdb0-72487b63082f/48d90ac1-a148-4e8e-af43-4ac3bb4ffad0/watch
+
 
