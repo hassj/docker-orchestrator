@@ -150,6 +150,34 @@ services:
 - Remove stack and service underly the compose file (network)
 `docker stack rm stack_name`
 
+## Chapter 4.7 Node label
+[placement constraint](https://docs.docker.com/engine/swarm/services/#placement-constraints) 
+[docker node update](https://docs.docker.com/reference/cli/docker/node/update/#add-label-metadata-to-a-node)
+
+- Add node label to certain node
+`docker node update --label-add LABEL=VALUE node_name`
+
+- show node label 
+`docker node inspect --pretty node_name`
+
+- run service task on only node with "--constraint" flag 
+`docker service create --name service_name --constraint label_name==value --replicas 3 image_name`
+
+You can also use negative value as bellows:
+`docker service create --name service_name --constraint label_name!=value --replicas 3 image_name`
+
+You can use "--constraint" flag multiple times to list multiple constraint
+
+- checking task associate with that service 
+`docker service ps service_name`
+
+- placement-pref with spread strategy to spread tasks evenly across all value of particular label (value null also is a value of label)
+`docker service create --name service_name --placement-pref spread=node.label.label_name --replicas replicas_number image_name `
+
+This will spread all tasks to all node having value for balancing load.
+
+
+
 
 
 # Reading: 
