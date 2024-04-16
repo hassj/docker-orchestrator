@@ -1,0 +1,17 @@
+# Install docker storage plugin for external share volume
+
+docker plugin install --grant-all-permissions vieux/sshfs
+
+# On swarm manager node create volume that uses as external volume storage
+docker volume create --driver vieux/sshfs \
+-o sshcmd=ssh_user_login@<storage_server_private_iP>:/path/on/external/server \
+-o password=<PASSWORD> \
+volume_name
+
+# Create service that use external share volume 
+docker service create --name service_name --replicas number_of_replicas \
+--mount volume-driver=vieux/sshfs,source=volume-share,destination=/container/path/mapping,volume-opt=sshcmd=userlogin_external_server@<Private_IP>:/path_sharing_external-server,volume-opt=password=<PASSWORD> image [Args]
+
+# Checking log service
+docker service logs service_name
+
