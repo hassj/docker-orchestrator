@@ -118,6 +118,8 @@ docker stack are similar to the multi-container apps created using docker-compos
 - Deploy stack to cluster using compose file
 `docker stack deploy -c compose_file stack_name`
 
+If you change the compose file then use again same command will update with the channges of that file.
+
 - List current Stack
 `docker stack ls`
 
