@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: configMap
+metadata:
+  name: my-configmap
+data:
+  key1: import data
+  key2: |
+    another data
+    multiple line
+    more lines
+    
