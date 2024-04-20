@@ -152,6 +152,103 @@ spec:
 ## Chapter 9.8: DaemonSets
 [daemonsets](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
 
-https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/51184904-5d71-4cce-88d1-b12ffee8dd59/1e25b17a-72c8-4b3d-9f34-4d4898ead9ba/watch
+That is tool allows you to run a replica pod dynamically on each node in cluster.
 
+They will run a replica on each existing node and create new replicas on new added node.
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: my-ds
+  template:
+    metadata:
+      labels:
+        app: my-ds
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "while true; do sleep 10; done"]
+```
 
+## Chapter 9.9: Kubernetes schedule
+[kubernetes schedule](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
+
+[taints and toleration](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
+
+[Resource management for pod and containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+
+### Node taints
+Node taints control which pod will be run on which nodes. Pods can have toleration with overwrite taints for the specific pod
+
+Each taints has an effect
+
+The NoExecute effect do two things to pods that do not have appropriate toleration:
+- Prevents new pod from being scheduled on the node
+- evicts existing pods.
+
+### Resources requests
+In the container spec, you can specify resources requests for resources such as memory usage  and CPU
+
+The scheduler will avoid scheduling pod on which node do not have enough available resources to satify the requests
+```
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: my-pod-reasonable
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: my-nginx
+    image: nginx:1.19.1
+    command: ["sh", "-c", "while true; do sleep 10; done"]
+    resources:
+      requests:
+        memory: 54Mi
+        cpu: 250m
+```
+>memory: 54Mi (54 Memibytes)
+>
+> cpu: 250m (250 mili cpu, around 1/4 of cpu)
+
+## Chapter 9.10: Probes
+[liveness, readiness, ans startup probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+
+probes allows you customize how the kubernetes determines the state of containers
+
+- liveness probes: Check whether the container is healthy
+- Readiness probes: check whether the container is ready to services user requests
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-probe-pod
+spec:
+  containers:
+  - name: nginx
+    image: 1.19.1
+    ports:
+    - containerPorts: 80
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 3
+      periodSeconds: 3
+    
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 3
+      periodSeconds: 3
+```
+
+## Chapter 9.12: Storage with volumes
+
+https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/51184904-5d71-4cce-88d1-b12ffee8dd59/492ec889-f3bd-42f1-984e-cd4b0e82f44b/watch

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-reasonable
+  labels:
+    app: my-busybox
+spec:
+  containers:
+  - name: my-busybox
+    image: radial/busyboxplus:curl
+    command: ["sh", "-c", "while true; do sleep 10; done"]
+    resources:
+      requests:
+        memory: 54Mi
+        cpu: 250m
