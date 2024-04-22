@@ -250,5 +250,70 @@ spec:
 ```
 
 ## Chapter 9.12: Storage with volumes
+[volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
 
-https://learn.acloud.guru/course/6b00566d-6246-4ebe-8257-f98f989321cf/learn/51184904-5d71-4cce-88d1-b12ffee8dd59/492ec889-f3bd-42f1-984e-cd4b0e82f44b/watch
+some volume types to know:
+
+- nfs: shared network Storage
+- hostpath: file are stored in a directory on a worker node. the same file will not appear if the pod run on another node.
+- emtydir: Temporary storage that is deleted if the pod is deleted. Useful for testing simple storage between containers in Pod
+
+## Chapter 9.13 Storage with persistent volumes
+[Persistent volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+
+A persistentvolume has a reclaim policy that used to determines what happen with the volume when associated claims are deleted
+
+### Reclaim policies
+
+- Retain - keeps volume and it's data and allows manually reclaiming. Admin is responsible for cleaning up existing data.
+- Delete: Deletes both volume and its underlying storage infrastucture
+- Recycle: Deletes the data contained in volume automatically and allows it to be used again.
+
+### Expanding a PVC
+you can expand a PersistentVolumeClaim by simply edit the size to larger. For this to work, storage class must support volume expansion, ``allowVolumeExpansion`` field will be set to true
+
+- Storage class definition:
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: localdisk
+provisioner: kubernetes.io/no-provisioner
+allowVolumeExpansion: true
+
+```
+
+- Persistent volume definition:
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata: my-pv
+spec:
+  storageClassName: localdisk
+  persistentVolumeReclaimPolicy: Recycle
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+  - path: /tmp/pvoutput
+  
+```
+
+- Persistent Volume Claim definition:
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  storageClassName: localdisk
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+```
+
+> pvc will be bound to PV automatically, with satisfy conditions such as: ``storageclassname``, ``accessmodes``, and resources request is not greater than the available resource in PV.
+
