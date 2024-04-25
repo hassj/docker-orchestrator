@@ -1,9 +1,0 @@
-Docker swarm:
-https://techmaster.vn/posts/37054/tim-hieu-ve-network-trong-docker-swarm
-https://aithietke.com/devops-docker-phan-7-docker-swarm/
-https://xuanthulab.net/tim-hieu-ve-docker-swarm-khoi-tao-va-su-dung.html
-https://xuanthulab.net/tao-va-quan-ly-cac-may-docker-machine.html
-https://lazyadmin.info/grafana-loki-like-prometheus-but-for-logs/
-https://viblo.asia/p/rancher-20-k8s-that-de-dang-OeVKBNXEKkW
-https://www.theserverside.com/answer/Kubernetes-vs-Rancher-The-differences-all-devs-should-know
-https://blog.kubecost.com/blog/rancher-vs-kubernetes/

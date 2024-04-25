@@ -76,7 +76,7 @@ spec:
 	  name: my-configmap
   - name: secret-vol
     secret:
-	  name: my-secret
+	  secretName: my-secret
 
 ```
 
